@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 @Service
@@ -35,6 +37,19 @@ public class SpaceDataService {
         Random random = new Random();
         int index = random.nextInt(facts.size());
         return facts.get(index);
+    }
+
+    public Map<String, String> createApodWithFactResponse() {
+        ApodResponse apod = getApod();
+        String fact = getRandomSpaceFact();
+
+        Map<String, String> response = new HashMap<>();
+        response.put("title", apod.getTitle());
+        response.put("explanation", apod.getExplanation());
+        response.put("image_url", apod.getUrl()); // или apod.getHdurl() для картинки в высоком разрешении
+        response.put("space_fact", fact);
+
+        return response;
     }
 
 }

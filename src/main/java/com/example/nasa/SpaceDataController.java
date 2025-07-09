@@ -1,3 +1,4 @@
+
 package com.example.nasa;
 
 import org.springframework.http.MediaType;
@@ -25,14 +26,7 @@ public class SpaceDataController {
     @GetMapping(value = "/fact", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, String>> getApodWithFact() {
         ApodResponse apod = spaceDataService.getApod();
-        String fact = spaceDataService.getRandomSpaceFact();
-
-        Map<String, String> response = new HashMap<>();
-        response.put("title", apod.getTitle());
-        response.put("explanation", apod.getExplanation());
-        response.put("image_url", apod.getUrl()); // или apod.getHdurl() для картинки в высоком разрешении
-        response.put("space_fact", fact);
-
+        Map<String, String> response = spaceDataService.createApodWithFactResponse();
         return ResponseEntity.ok(response);
     }
 }
